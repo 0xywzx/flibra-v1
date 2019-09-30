@@ -41,12 +41,13 @@ module.exports = {
   contracts_build_directory: `./src/abis/`,
 
   mocha: {
-    // timeout: 100000
+    //timeout: 100000
   },
 
   // Configure your compilers
   compilers: {
     solc: {
+      version: "native",
       optimizer: {
         enabled: true,
         runs: 200
