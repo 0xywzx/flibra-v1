@@ -20,6 +20,20 @@ Repeat passphrase:
 Address: {4d8c003c1dc28a28a323873752e2b07c2cf3d413}
 ```
 
+### Create account
+
+```
+$ geth account new --datadir ./flibrachain/node1
+```
+
+```
+INFO [12-20|11:37:00.688] Maximum peer count                       ETH=25 LES=0 total=25
+Your new account is locked with a password. Please give a password. Do not forget this password.
+Passphrase:
+Repeat passphrase:
+Address: {57da1c524a3e762a8921983f52d3ce21672357f7}
+```
+
 ### Generate the genecis block
 
 ```
@@ -134,10 +148,10 @@ Start up geth
 
 ```
 geth --datadir node1/ --syncmode 'full' --port 30311 --rpc --rpcaddr '0.0.0.0' --rpcport 8545 --rpccorsdomain "*" --rpcvhosts "*" --rpcapi 'personal,db,eth,net,web3,txpool,miner' --ws --wsapi 'eth,web3,net' --wsorigins='*' --wsaddr='0.0.0.0' --wsport 8546 --networkid 1515 --gasprice '0'
+```
 
 In another terminal, start mining to build blockchain
 
-```
 $ cd flibrachain
 $ geth attach ipc:node1/geth.ipc
 Welcome to the Geth JavaScript console!
