@@ -152,6 +152,7 @@ geth --datadir node1/ --syncmode 'full' --port 30311 --rpc --rpcaddr '0.0.0.0' -
 
 In another terminal, start mining to build blockchain
 
+```
 $ cd flibrachain
 $ geth attach ipc:node1/geth.ipc
 Welcome to the Geth JavaScript console!
