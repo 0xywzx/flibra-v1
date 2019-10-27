@@ -11,6 +11,7 @@ contract FLibra {
 
   mapping(address => uint[]) public myItemId;
   mapping(address => uint[]) public myPurchasedItemId;
+  mapping(address => User) public UserInfo;
   mapping(uint256 => SellerReview) public reviewToSeller;
   mapping(uint256 => PurchaserReview) public reviewToPurchaser;
 
@@ -18,10 +19,17 @@ contract FLibra {
   struct Item {
     uint256 id;
     string itemName;
+    string itemPhoto;
     uint256 price;
     address seller;
     bool selling;
     address purchaser;
+  }
+
+  struct User {
+    address userAddress;
+    string userName;
+    string userIcon;
   }
 
   struct SellerReview {
@@ -40,6 +48,7 @@ contract FLibra {
   event PostItem(uint256 id, string itemName, uint256 price, address seller, bool selling, address purchaser);
   event ItemPurchased(uint256 id, address purchaser);
   event EditItem(uint256 id, string itemName, uint256 price);
+  event UserInfoCreated(address userAddress, string userName, string userIcon);
   event WriteReviewToSeller(uint256 itemId, uint256 star, string text);
   event WriteReviewToPurchaser(uint256 itemId, uint256 star, string text);
 
@@ -47,9 +56,15 @@ contract FLibra {
 
   }
 
+  // -------- Create user info --------
+  function setUserInfo(string memory _userName, string memory _userIcon) public {
+    UserInfo[msg.sender] = User(msg.sender, _userName, _userIcon);
+    emit UserInfoCreated(msg.sender, _userName, _userIcon);
+  } 
+
   // -------- Post a Item --------
-  function setItem(string memory _itemName, uint256 _price) public {
-    allItems.push(Item(itemId, _itemName, _price, msg.sender, true, temporaryPurchaser));
+  function setItem(string memory _itemName, string memory _itemPhoto, uint256 _price) public {
+    allItems.push(Item(itemId, _itemName, _itemPhoto, _price, msg.sender, true, temporaryPurchaser));
     myItemId[msg.sender].push(itemId);
     //onSaleItems[allItems[itemId].selling].push(allItems[itemId].id);
     emit PostItem(itemId, _itemName, _price, msg.sender, true, temporaryPurchaser);
@@ -130,6 +145,11 @@ contract FLibra {
     require(allItems[_id].selling == bool(false) );
     return allItems[_id];
   } 
+
+  // -------- UserInfo --------
+  function getUserInfo(address _userAddress) public view returns (User memory) {
+    return UserInfo[_userAddress];
+  }
 
   // -------- Review --------
   function getSellerReview(uint256 _id) public view returns (SellerReview memory) {

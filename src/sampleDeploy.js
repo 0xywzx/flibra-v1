@@ -63,6 +63,7 @@ handlePostItem = async() => {
     // await this.props.web3.eth.personal.unlockAccount(node, "ywzx", 1000, () => {
       
       const acts = await this.props.web3.eth.getAccounts()
+      await console.log(acts[1])
       await itemContract.deploy({
         data: bytecode,
         arguments:[1]

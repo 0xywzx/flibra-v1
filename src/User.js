@@ -26,6 +26,10 @@ class User extends Component {
     })
   }
 
+  // createUserInfo = async() => {
+
+  // }
+
   handleWriteReview = async() => {
     this.setState({ loading: true })
 

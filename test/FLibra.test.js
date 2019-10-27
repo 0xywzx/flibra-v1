@@ -13,7 +13,6 @@ contract('FLibra', ([deployer, user1, user2, user3, user4]) => {
   })
 
   describe('test flibra contract', async() => {
-
     let result
     let itemName = "Item 1"
     let itemPrice = 10
@@ -110,6 +109,33 @@ contract('FLibra', ([deployer, user1, user2, user3, user4]) => {
         event.itemName.should.equal(itemName, 'edited item name is correct')
         event.price.toString().should.equal(itemPrice.toString(), 'edited item price is correct')
       })
+    })
+
+    describe('user function', async () => {
+      let userName1 = "Mr. FLibra"
+      let userIcon1 = "QmTjzYr14n12YAB4bEMj2fEKcNL3G2TBtBKNxFCRe2Bxtg"
+
+      beforeEach(async() => {
+        
+        result = await flibra.setUserInfo(userName1, userIcon1, {from: user1})
+      })
+  
+      it('emits user created event', async () => {
+        const log = result.logs[0]
+        log.event.should.eq(('UserInfoCreated'))
+        const event = log.args
+        event.userAddress.should.equal(user1, 'user address is correct')
+        event.userName.should.equal(userName1, 'user name is correct')
+        event.userIcon.should.equal(userIcon1, 'user icon address is correct')
+      })
+
+      it('facilitates get user info function', async () => {
+        result = await flibra.getUserInfo(user1)
+        result.userAddress.should.equal(user1, 'user address is correct')
+        result.userName.should.equal(userName1, 'user name is correct')
+        result.userIcon.should.equal(userIcon1, 'user icon address is correct')
+      })
+
     })
 
     describe('Facilitates Review Function', async () => {

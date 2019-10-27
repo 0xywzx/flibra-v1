@@ -38,19 +38,19 @@ class App extends Component {
   async loadWalletData() {
     // load libra wallet 
     let address = sessionStorage.getItem('address');
-    // if (address !== undefined) {
-    //   const walletBalance = await axios.post(`http://localhost:3005/getBalance`, { address: address }) 
-    //   this.setState({ 
-    //     userAddress: address,
-    //     balance: walletBalance.data.balance 
-    //   })
-    // }
+    if (address !== undefined) {
+      const walletBalance = await axios.post(`http://localhost:3005/getBalance`, { address: address }) 
+      this.setState({ 
+        userAddress: address,
+        balance: walletBalance.data.balance 
+      })
+      console.log(walletBalance.data.balance)
+    }
 
     // load ether account 
     let etherAccount = JSON.parse(sessionStorage.getItem('etherAccout'))
     let etherAddress = sessionStorage.getItem('etherAddress')
-
-    if (etherAddress.length > 0) {
+    if (etherAddress !== null) {
       this.state.web3.eth.defaultAccount = etherAccount.address
       const nonce = await this.state.web3.eth.getTransactionCount(this.state.web3.eth.defaultAccount)
       this.setState({ 
@@ -63,7 +63,7 @@ class App extends Component {
   }
 
   async loadData() {
-    if (this.state.etherAddress.length > 0 ) {
+    if (this.state.etherAddress !== undefined ) {
       // Get My Posted Items
       const myItemId = await this.state.contract.methods.getMyItemId(this.state.etherAddress).call()
       for ( var i = 0 ; i < myItemId.length; i++ ) {
@@ -126,7 +126,7 @@ class App extends Component {
       this.setState.onSaleItems = []
       for ( var k = 0; k < numberOfItem; k++ ) {
         const item = await this.state.contract.methods.getItemOnSale(k).call()
-        // console.log(item)
+        console.log(item)
         if (item.selling === Boolean("true")) {
           this.setState({
             onSaleItems: [...this.state.onSaleItems, item]

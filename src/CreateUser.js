@@ -39,7 +39,7 @@ class CreateUser extends Component {
                 <>
                   <h2 className="title-text">新規作成</h2>
                   <br/>
-                  <p>Linraアカウントを発行する</p>
+                  <p>Libraアカウントを発行する</p>
                   <button className="btn btn-outline-info" onClick={this.handleCreateWallet}>作成する</button>
                 </>    
               }
